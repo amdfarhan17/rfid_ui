@@ -1,0 +1,6 @@
+{
+  "name": "Operator Mapping System",
+  "description": "An RFID-driven operator-to-machine mapping dashboard featuring real-time status, access logs, and CSV export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
