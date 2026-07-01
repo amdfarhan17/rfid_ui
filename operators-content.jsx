@@ -51,9 +51,10 @@ function OperatorsContent() {
       setLastSeen(new Date());
 
       // Sync session timer with ESP value
-      if (data.active && typeof data.session_seconds === 'number') {
-        setSessionSeconds(data.session_seconds);
-      }
+      // if (data.active && typeof data.session_seconds === 'number') {
+      //   setSessionSeconds(data.session_seconds);
+      // }
+      setSessionSeconds(Number(data.session_seconds || 0));
 
       // Build access log from state transitions
       if (data.active && !prevActive.current) {
@@ -95,20 +96,28 @@ function OperatorsContent() {
     if (!espBase) return;
     setConnStatus('Connecting');
     fetchStatus(espBase);
-    pollRef.current = setInterval(() => fetchStatus(espBase), 2000);
+    pollRef.current = setInterval(() => fetchStatus(espBase), 1000);
     return () => clearInterval(pollRef.current);
   }, [espBase, fetchStatus]);
 
   // ── Session ticker ────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (status?.active) {
-      tickRef.current = setInterval(() => setSessionSeconds((s) => s + 1), 1000);
-    } else {
-      setSessionSeconds(0);
-      clearInterval(tickRef.current);
-    }
-    return () => clearInterval(tickRef.current);
-  }, [status?.active]);
+  // useEffect(() => {
+  //   if (status?.active) {
+  //     tickRef.current = setInterval(() => setSessionSeconds((s) => s + 1), 1000);
+  //   } else {
+  //     setSessionSeconds(0);
+  //     clearInterval(tickRef.current);
+  //   }
+  //   return () => clearInterval(tickRef.current);
+  // }, [status?.active]);
+
+  // Session timer is controlled ONLY by the ESP32.
+// Reset it immediately when there is no active session.
+useEffect(() => {
+  if (!status?.active) {
+    setSessionSeconds(0);
+  }
+}, [status]);
 
   // ── Connect handler ───────────────────────────────────────────────────────
   const handleConnect = () => {
