@@ -4,6 +4,7 @@
 #include <MFRC522.h>
 #include <ArduinoJson.h>
 
+
 //================= WIFI =================
 const char* ssid = "a";
 const char* password = "30052005f";
