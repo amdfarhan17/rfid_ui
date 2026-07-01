@@ -12,7 +12,7 @@ const char* password = "30052005f";
 // ESP32-S3-N16R8 note: GPIO 33-37 are reserved for octal PSRAM/flash
 // on N16R8 boards, and GPIO 0/3/45/46 are strapping pins. Pins below
 // avoid all of those and are safe general-purpose pins on most S3
-// dev boards. Adjust if your specific board silkscreen differs.
+// dev boards. Adjust if your specific board silkscreen differs
 
 #define SCK_PIN   12
 #define MISO_PIN  13
